@@ -1,12 +1,11 @@
 package com.finance.backend;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
-/**
- * Main application class for Finance Backend.
- * This class serves as the entry point for the Spring Boot application.
- */
 @SpringBootApplication
 public class FinanceBackendApplication {
 
@@ -14,4 +13,9 @@ public class FinanceBackendApplication {
         SpringApplication.run(FinanceBackendApplication.class, args);
     }
 
+    // <-- Put the test bean here
+    @Bean
+    public CommandLineRunner testDbEnv(@Value("${spring.datasource.url}") String dbUrl) {
+        return args -> System.out.println("DB URL Spring sees: " + dbUrl);
+    }
 }
