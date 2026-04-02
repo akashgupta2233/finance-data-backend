@@ -20,16 +20,26 @@ This is a Spring Boot application for finance data management built with Maven a
 ```
 finance-backend/
 ├── pom.xml                                    # Maven configuration
-├── src/
-│   ├── main/
-│   │   ├── java/com/finance/backend/
-│   │   │   └── FinanceBackendApplication.java   # Main application class
-│   │   └── resources/
-│   │       └── application.properties            # Application configuration
-│   └── test/
-│       └── java/com/finance/backend/
-│           └── FinanceBackendApplicationTests.java
-└── README.md                                  # This file
+├── Dockerfile
+├── README.md                                  # This file
+└── src/
+    ├── main/
+    │   ├── java/com/finance/backend/
+    │   │   ├── FinanceBackendApplication.java   # Main application class
+    │   │   ├── config/                           # Spring config classes
+    │   │   ├── controller/                       # REST controllers
+    │   │   ├── dto/                              # Data transfer objects
+    │   │   ├── entity/                           # JPA entities
+    │   │   ├── exception/                        # Exception handlers
+    │   │   ├── repository/                       # Spring Data repositories
+    │   │   ├── security/                         # Security classes (JWT, config)
+    │   │   └── service/                          # Business services
+    │   └── resources/
+    │       ├── application.properties
+    │       └── application-prod.properties
+    └── test/
+        └── java/com/finance/backend/
+            └── FinanceBackendApplicationTests.java
 ```
 
 ### Getting Started
@@ -98,3 +108,22 @@ After project setup, you can:
 - **Lombok not working**: Ensure IDE has Lombok annotation processor enabled
 - **Database connection errors**: Verify PostgreSQL is running and credentials are correct
 - **Build failure**: Check Java version is 17+: `java -version`
+
+### Production Deployment (Render + Neon Postgres)
+
+1. **Render setup**
+   - Link the GitHub repo `https://github.com/akashgupta2233/finance-data-backend.git` to Render and choose the desired branch (main/master).
+   - Create a new **Web Service** and set the build command to `./mvnw clean package` and start command to `java -jar target/finance-backend-0.0.1-SNAPSHOT.jar` (update jar name after version changes).
+   - Make sure the rendered service binds to the `PORT` environment variable; set `PORT=8080` if you rely on the existing configuration.
+   - Add the following environment variables in Render’s dashboard (Environment tab):
+     - `DB_URL`: `jdbc:postgresql://ep-tiny-lab-a1m0rf8m.ap-southeast-1.aws.neon.tech/neondb?sslmode=require`
+     - `DB_USERNAME`: `neondb_owner`
+     - `DB_PASSWORD`: `npg_r2t0sUvwHBNT`
+     - `SPRING_PROFILES_ACTIVE`: `prod`
+
+2. **Production profile**
+   - The `src/main/resources/application-prod.properties` file already maps the above env vars to Spring Boot datasource settings and disables verbose SQL logging.
+
+3. **Verification**
+   - Inspect Render logs to confirm the app connects to Neon Postgres and that the `prod` profile loads.
+   - Request JWT tokens from the authentication endpoints and call the User/FinancialRecord APIs via the public Render URL to ensure role-based access controls enforce permissions as expected.
