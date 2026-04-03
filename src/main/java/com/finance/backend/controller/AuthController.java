@@ -25,10 +25,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/auth") // Matches global prefix logic
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -62,7 +64,23 @@ public class AuthController {
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
         user.setStatus(UserStatus.ACTIVE);
-        user.setRoles(Set.of(Role.VIEWER));
+
+        // Map String roles to Role Enums safely
+        Set<Role> userRoles = new HashSet<>();
+        if (request.getRoles() != null && !request.getRoles().isEmpty()) {
+            userRoles = request.getRoles().stream()
+                    .map(roleName -> {
+                        try {
+                            return Role.valueOf(roleName.toUpperCase());
+                        } catch (IllegalArgumentException e) {
+                            return Role.VIEWER; // Default if role name is invalid
+                        }
+                    })
+                    .collect(Collectors.toSet());
+        } else {
+            userRoles.add(Role.VIEWER); // Default if no roles provided
+        }
+        user.setRoles(userRoles);
 
         User created = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(toDto(created));

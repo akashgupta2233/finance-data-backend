@@ -3,6 +3,7 @@ package com.finance.backend.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.util.Set;
 
 public class RegisterRequest {
 
@@ -16,6 +17,8 @@ public class RegisterRequest {
     @NotBlank
     @Size(min = 8)
     private String password;
+
+    private Set<String> roles;
 
     public RegisterRequest() {
     }
@@ -42,5 +45,13 @@ public class RegisterRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
 }
