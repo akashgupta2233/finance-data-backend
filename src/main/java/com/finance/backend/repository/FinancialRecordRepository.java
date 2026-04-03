@@ -35,7 +35,7 @@ public interface FinancialRecordRepository extends BaseRepository<FinancialRecor
               and (
                     :keyword is null
                     or lower(fr.category) like lower(concat('%', cast(:keyword as string), '%'))
-                    or lower(coalesce(fr.notes, '')) like lower(concat('%', cast(:keyword as string), '%'))
+                    or lower(coalesce(fr.description, '')) like lower(concat('%', cast(:keyword as string), '%'))
               )
             order by fr.date desc, fr.id desc
             """,
@@ -52,7 +52,7 @@ public interface FinancialRecordRepository extends BaseRepository<FinancialRecor
               and (
                     :keyword is null
                     or lower(fr.category) like lower(concat('%', cast(:keyword as string), '%'))
-                    or lower(coalesce(fr.notes, '')) like lower(concat('%', cast(:keyword as string), '%'))
+                    or lower(coalesce(fr.description, '')) like lower(concat('%', cast(:keyword as string), '%'))
               )
             """
     )

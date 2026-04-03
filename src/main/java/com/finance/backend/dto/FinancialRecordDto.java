@@ -11,6 +11,8 @@ import java.util.Objects;
 
 public class FinancialRecordDto {
 
+    private Long id;
+
     @NotNull
     @DecimalMin(value = "0.01")
     private BigDecimal amount;
@@ -24,9 +26,17 @@ public class FinancialRecordDto {
     @NotNull
     private LocalDate date;
 
-    private String notes;
+    private String description;
 
     public FinancialRecordDto() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public BigDecimal getAmount() {
@@ -61,12 +71,12 @@ public class FinancialRecordDto {
         this.date = date;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -78,15 +88,16 @@ public class FinancialRecordDto {
             return false;
         }
         FinancialRecordDto that = (FinancialRecordDto) o;
-        return Objects.equals(amount, that.amount)
+        return Objects.equals(id, that.id)
+                && Objects.equals(amount, that.amount)
                 && type == that.type
                 && Objects.equals(category, that.category)
                 && Objects.equals(date, that.date)
-                && Objects.equals(notes, that.notes);
+                && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(amount, type, category, date, notes);
+        return Objects.hash(id, amount, type, category, date, description);
     }
 }

@@ -2,6 +2,7 @@ package com.finance.backend.controller;
 
 import com.finance.backend.dto.LoginRequest;
 import com.finance.backend.dto.LoginResponse;
+import com.finance.backend.dto.RegisterRequest;
 import com.finance.backend.dto.UserDto;
 import com.finance.backend.entity.Role;
 import com.finance.backend.entity.User;
@@ -48,7 +49,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@Valid @RequestBody UserDto request) {
+    public ResponseEntity<UserDto> register(@Valid @RequestBody RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
         }
@@ -85,6 +86,7 @@ public class AuthController {
 
     private UserDto toDto(User user) {
         UserDto dto = new UserDto();
+        dto.setId(user.getId());
         dto.setUsername(user.getUsername());
         dto.setEmail(user.getEmail());
         dto.setStatus(user.getStatus());

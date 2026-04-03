@@ -62,7 +62,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
         existing.setType(record.getType());
         existing.setCategory(normalizeCategory(record.getCategory()));
         existing.setDate(record.getDate());
-        existing.setNotes(record.getNotes());
+        existing.setDescription(record.getDescription());
 
         return financialRecordRepository.save(existing);
     }
@@ -178,11 +178,12 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
 
     private FinancialRecordDto toDto(FinancialRecord record) {
         FinancialRecordDto dto = new FinancialRecordDto();
+        dto.setId(record.getId());
         dto.setAmount(record.getAmount());
         dto.setType(record.getType());
         dto.setCategory(record.getCategory());
         dto.setDate(record.getDate());
-        dto.setNotes(record.getNotes());
+        dto.setDescription(record.getDescription());
         return dto;
     }
 

@@ -40,7 +40,7 @@ public class FinancialRecord extends BaseEntity {
     private LocalDate date;
 
     @Column(length = 1000, columnDefinition = "TEXT")
-    private String notes;
+    private String description;
 
     @Column(nullable = false)
     private boolean deleted = false;
@@ -86,12 +86,12 @@ public class FinancialRecord extends BaseEntity {
         this.date = date;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isDeleted() {

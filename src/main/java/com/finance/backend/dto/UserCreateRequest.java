@@ -7,30 +7,26 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-public class UserDto {
-
-    private Long id;
+public class UserCreateRequest {
 
     @NotBlank
     private String username;
+
     @Email
     @NotBlank
     private String email;
+
+    @NotBlank
+    @Size(min = 8)
+    private String password;
+
     private UserStatus status;
+
     private Set<Role> roles = new HashSet<>();
 
-    public UserDto() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public UserCreateRequest() {
     }
 
     public String getUsername() {
@@ -49,6 +45,14 @@ public class UserDto {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public UserStatus getStatus() {
         return status;
     }
@@ -63,22 +67,5 @@ public class UserDto {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserDto userDto = (UserDto) o;
-        return Objects.equals(id, userDto.id)
-                && Objects.equals(username, userDto.username)
-                && Objects.equals(email, userDto.email)
-                && status == userDto.status
-                && Objects.equals(roles, userDto.roles);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, email, status, roles);
     }
 }

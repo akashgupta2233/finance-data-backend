@@ -87,17 +87,18 @@ public class FinancialRecordController {
         record.setType(dto.getType());
         record.setCategory(dto.getCategory());
         record.setDate(dto.getDate());
-        record.setNotes(dto.getNotes());
+        record.setDescription(dto.getDescription());
         return record;
     }
 
     private FinancialRecordDto toDto(FinancialRecord record) {
         FinancialRecordDto dto = new FinancialRecordDto();
+        dto.setId(record.getId());
         dto.setAmount(record.getAmount());
         dto.setType(record.getType());
         dto.setCategory(record.getCategory());
         dto.setDate(record.getDate());
-        dto.setNotes(record.getNotes());
+        dto.setDescription(record.getDescription());
         return dto;
     }
 }
