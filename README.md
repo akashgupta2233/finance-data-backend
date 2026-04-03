@@ -89,8 +89,9 @@ SPRING_PROFILES_ACTIVE=dev
 ```json
 {
   "username": "testuser",
+  "email": "testuser@example.com",
   "password": "password123",
-  "roles": ["USER"]
+  "roles": ["ANALYST"]
 }
 ```
 
@@ -219,7 +220,7 @@ Authorization: Bearer <JWT_TOKEN>
 ## Security
 
 * JWT-based authentication
-* Role-based authorization (ADMIN / USER)
+* Role-based authorization (ADMIN / ANALYST / VIEWER)
 * Stateless session management
 
 ---
