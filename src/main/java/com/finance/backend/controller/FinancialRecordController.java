@@ -27,7 +27,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/records")
+@RequestMapping("/financial-records")
 public class FinancialRecordController {
 
     private final FinancialRecordService financialRecordService;

@@ -1,5 +1,6 @@
 package com.finance.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,14 +32,14 @@ public class FinancialRecord extends BaseEntity {
     private FinancialType type;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(255)")
     private String category;
 
     @NotNull
     @Column(nullable = false)
     private LocalDate date;
 
-    @Column(length = 1000)
+    @Column(length = 1000, columnDefinition = "TEXT")
     private String notes;
 
     @Column(nullable = false)
@@ -47,6 +48,7 @@ public class FinancialRecord extends BaseEntity {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "created_by", nullable = false)
+    @JsonIgnoreProperties({"password", "roles", "status", "email"})
     private User createdBy;
 
     public FinancialRecord() {

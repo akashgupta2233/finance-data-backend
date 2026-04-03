@@ -29,13 +29,13 @@ public interface FinancialRecordRepository extends BaseRepository<FinancialRecor
             where fr.deleted = false
               and (:startDate is null or fr.date >= :startDate)
               and (:endDate is null or fr.date <= :endDate)
-              and (:category is null or lower(fr.category) = lower(:category))
+              and (:category is null or lower(fr.category) = lower(cast(:category as string)))
               and (:type is null or fr.type = :type)
-              and (:createdBy is null or lower(creator.username) = lower(:createdBy))
+              and (:createdBy is null or lower(creator.username) = lower(cast(:createdBy as string)))
               and (
                     :keyword is null
-                    or lower(fr.category) like lower(concat('%', :keyword, '%'))
-                    or lower(coalesce(fr.notes, '')) like lower(concat('%', :keyword, '%'))
+                    or lower(fr.category) like lower(concat('%', cast(:keyword as string), '%'))
+                    or lower(coalesce(fr.notes, '')) like lower(concat('%', cast(:keyword as string), '%'))
               )
             order by fr.date desc, fr.id desc
             """,
@@ -46,13 +46,13 @@ public interface FinancialRecordRepository extends BaseRepository<FinancialRecor
             where fr.deleted = false
               and (:startDate is null or fr.date >= :startDate)
               and (:endDate is null or fr.date <= :endDate)
-              and (:category is null or lower(fr.category) = lower(:category))
+              and (:category is null or lower(fr.category) = lower(cast(:category as string)))
               and (:type is null or fr.type = :type)
-              and (:createdBy is null or lower(creator.username) = lower(:createdBy))
+              and (:createdBy is null or lower(creator.username) = lower(cast(:createdBy as string)))
               and (
                     :keyword is null
-                    or lower(fr.category) like lower(concat('%', :keyword, '%'))
-                    or lower(coalesce(fr.notes, '')) like lower(concat('%', :keyword, '%'))
+                    or lower(fr.category) like lower(concat('%', cast(:keyword as string), '%'))
+                    or lower(coalesce(fr.notes, '')) like lower(concat('%', cast(:keyword as string), '%'))
               )
             """
     )
