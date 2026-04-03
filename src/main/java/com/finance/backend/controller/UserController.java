@@ -1,5 +1,6 @@
 package com.finance.backend.controller;
 
+import com.finance.backend.dto.UpdateRolesRequest;
 import com.finance.backend.dto.UserCreateRequest;
 import com.finance.backend.dto.UserDto;
 import com.finance.backend.entity.User;
@@ -54,6 +55,20 @@ public class UserController {
     @PutMapping("/{id}/deactivate")
     public ResponseEntity<UserDto> deactivateUser(@PathVariable Long id) {
         User user = userService.deactivateUser(id);
+        return ResponseEntity.ok(toDto(user));
+    }
+
+    @PutMapping("/{id}/roles")
+    public ResponseEntity<UserDto> updateUserRoles(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateRolesRequest request) {
+        User user = userService.updateUserRoles(id, request.getRoles());
+        return ResponseEntity.ok(toDto(user));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
         return ResponseEntity.ok(toDto(user));
     }
 
